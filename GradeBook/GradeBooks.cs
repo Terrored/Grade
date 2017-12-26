@@ -10,13 +10,14 @@ namespace GradeBook
 {
     public class GradeBooks
     {
-        private List<float> grades;
+        protected List<float> grades;
         public GradeBooks()
         {
             grades = new List<float>();
 
         }
 
+        
         public string Name
         {
             get { return name; }
