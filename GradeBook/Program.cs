@@ -12,22 +12,34 @@ namespace GradeBook
     {
         static void Main(string[] args)
         {
-            // SpeechSynthesizer synth = new SpeechSynthesizer();
-            // synth.Speak("No witam wszystkich!");
-
-            GradeBooks book = new GradeBooks();
+            IGradeTracker book = CreateGradeBook();
             GetBookName(book);
             AddGrades(book);
 
             SaveGrades(book);
 
             WriteResults(book);
+
+
+            // SpeechSynthesizer synth = new SpeechSynthesizer();
+            // synth.Speak("No witam wszystkich!");
         }
 
-        private static void WriteResults(GradeBooks book)
+        private static IGradeTracker CreateGradeBook()
+        {
+           
+
+            return new ThrowAwayGradeBook();
+        }
+
+        private static void WriteResults(IGradeTracker book)
         {
             GradeStatistics stats = book.ComputeStatistics();
 
+            foreach (float grade in book)
+            {
+                Console.WriteLine(grade);
+            }
             WriteResult("Average", stats.AverageGrade);
             WriteResult("Highest", stats.HighestGrade);
             WriteResult("Lowest", stats.LowestGrade);
@@ -36,7 +48,7 @@ namespace GradeBook
             Console.ReadKey();
         }
 
-        private static void SaveGrades(GradeBooks book)
+        private static void SaveGrades(IGradeTracker book)
         {
             using (StreamWriter outputFile = File.CreateText("grades.txt"))
             {
@@ -45,19 +57,19 @@ namespace GradeBook
             }
         }
 
-        private static void AddGrades(GradeBooks book)
+        private static void AddGrades(IGradeTracker book)
         {
             book.AddGrade(78);
             book.AddGrade(68);
             book.AddGrade(92);
         }
 
-        private static void GetBookName(GradeBooks book)
+        private static void GetBookName(IGradeTracker book)
         {
             try
             {
-                Console.WriteLine("Enter a name");
-                book.Name = Console.ReadLine();
+                //Console.WriteLine("Enter a name");
+                //book.Name = Console.ReadLine();
             }
 
             catch (ArgumentException ex)

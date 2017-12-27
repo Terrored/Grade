@@ -8,9 +8,9 @@ namespace GradeBook
 {
     public class ThrowAwayGradeBook : GradeBooks
     {
-        public GradeStatistics ComputeStatistics()
+        public override GradeStatistics ComputeStatistics()
         {
-            
+            Console.WriteLine("ThrowAwayGradeBook::ComputeStatistics");
             float lowest = float.MaxValue;
 
             foreach (float grade in grades)
